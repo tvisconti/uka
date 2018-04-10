@@ -1,0 +1,100 @@
+<div class="container main-bg">
+  <div class="row header">
+    <div class="col-xs-12">
+      <h1>
+        <div class="col-lg-6 col-md-6 col-xs-6">
+          ToDo
+        </div>
+        <div class="col-lg-6 col-md-6 col-xs-6 text-right">
+          {{name}}
+        </div>
+      </h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-1 col-md-1">
+    </div>
+    <div class="col-lg-1 col-md-1">
+    </div>
+    <div class="col-lg-6 col-md-6 cursor-pointer col-header" (click)="sortBy('Task')">
+      Task
+    </div>
+    <!-- add up and down arrow with tooltip explaining "open - completed" or "complete - opem" -->
+    <div class="col-lg-2 col-md-8 cursor-pointer col-header" (click)="sortBy('Status')">
+      Status
+    </div>
+    <div class="col-lg-2 col-md-2 cursor-pointer col-header" (click)="sortBy('Due Date')">
+      Due Date
+    </div>
+  </div>
+  <!-- Later - add tooltip for Date Created -->
+  <div class="row">
+    <ul *ngIf="items.length > 0">
+      <li *ngFor="let item of items; let i = index" class="row" [ngClass]="{'faded-strikethrough': item.Status === 'Complete'}">
+        <div class="col-lg-1 col-md-1 col-xs-1 btn-group" data-toggle="buttons">
+          <label class="btn btn-default">
+            <input type="checkbox" autocomplete="off" (click)="toggleComplete(i)">
+            <span class="glyphicon glyphicon-ok" [hidden]="item.Status!=='Complete'">
+            </span>
+          </label>
+        </div>
+        <div class="col-lg-1 col-md-1 col-xs-1">
+          <button class="glyphicon glyphicon-pencil btn" type="button" *ngIf="!item.Editing" (click)="item.Editing=true"></button>
+          <button class="glyphicon glyphicon-ok btn" type="button" *ngIf="item.Editing" (click)="saveItem(i)"></button>
+          <button class="glyphicon glyphicon-trash" type="button" *ngIf="!item.Editing && item.Status!=='Creating'" (click)="deleteItem(i)"></button>
+          <button class="glyphicon glyphicon-remove" type="button" *ngIf="item.Editing && item.Status!=='Creating'" [disabled]="checkForData(i)" (click)=cancelEdit(i)></button>
+        </div>
+        <!-- Fixed -->
+        <div class="col-lg-6 col-md-6 col-xs-6 text" *ngIf="!item.Editing">
+          {{item.Title}}
+        </div>
+        <div class="col-lg-2 col-md-6 col-xs-6 text" *ngIf="!item.Editing">
+          {{item.Status}}
+        </div>
+        <div class="col-lg-2 col-md-2 col-xs-2 text" *ngIf="!item.Editing">
+          {{item.Due_Date}}
+        </div>
+        <div class="col-lg-10 col-md-10 col-xs-10 text" *ngIf="!item.Editing">
+          {{item.Description}}
+        </div>
+        <!-- Editable -->
+        <form>
+          <div class="col-lg-6 col-md-6 col-xs-6" *ngIf="item.Editing">
+            <label for="title-{{i}}">Title</label>
+            <input class="form-control" id="title-{{i}}" [(ngModel)]="item.Title" name="title" (keyup.enter)="saveItem(i)" placeholder="Title" />
+          </div>
+          <div class="col-lg-2 col-md-2 col-xs-2" *ngIf="item.Editing">
+            <label for="status-{{i}}">Status</label>
+            <select class="form-control" [(ngModel)]="item.Status" name="status">
+              <option *ngFor="let s of statuses" [ngValue]="s">{{s}}</option>
+            </select>
+          </div>
+          <div class="col-lg-2 col-md-2 col-xs-2" *ngIf="item.Editing">
+            <label for="due-{{i}}">Due Date</label>
+            <input class="form-control" id="due-{{i}}" [(ngModel)]="item.Due_Date" name="due-date" (keyup.enter)="saveItem(i)" placeholder="Due Date" />
+
+          </div>
+          <div class="col-lg-10 col-md-10 col-xs-10" *ngIf="item.Editing">
+            <label for="description-{{i}}">Description</label>
+            <input class="form-control" [(ngModel)]="item.Description" name="description" (keyup.enter)="saveItem(i)" placeholder="Description" />
+          </div>
+        </form>
+      </li>
+    </ul>
+    <div *ngIf="items.length === 0">
+      No items!
+    </div>
+  </div>
+  <div class="row">
+    <button type="button" class="btn btn-primary" [disabled]="creatingNewItem" (click)="createItem()">
+        New Item
+ 	  </button>
+    <button type="button" class="btn btn-primary" (click)="save()">
+      Save
+    </button>
+    <!-- TEMP - for dev/testing -->
+    <button type="button" class="btn btn-secondary" (click)="resetTodoList()">
+      Reset
+    </button>
+  </div>
+</div>

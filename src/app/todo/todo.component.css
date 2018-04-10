@@ -1,0 +1,61 @@
+/* Page Style */
+.container {
+    border-radius: 25px !important;
+}
+.main-bg {
+    background-color: #29506d;
+    color: #718EA4;
+    font-size: 20px;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.faded-strikethrough > .text {
+    opacity: .4;
+    text-decoration: line-through;
+}
+
+h1:hover {
+    color: silver;
+}
+
+.header {
+    background-color: #fcfcfc;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.col-header {
+    font-weight: 600;
+}
+
+.glyphicon {
+    cursor: pointer;
+    background: inherit;
+    border: none;
+}
+
+.glyphicon-ok {
+    font-size: 20px;
+}
+
+li {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin: 10px 40px 10px 0px;
+    padding: 10px 0px;
+}
+
+li:hover {
+    border: 2px solid #ccc;
+    font-weight: 600;
+}
+
+/* Override bootstrap. */
+[hidden] {
+    visibility: hidden !important;
+}

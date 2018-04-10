@@ -1,0 +1,14 @@
+<input [(ngModel)]="username" />
+<p *ngIf="invalidUsername" class="error-text">
+  Username not found.
+</p>
+<input [(ngModel)="password" />
+<p *ngIf="invalidPassword" class="error-text">
+  Invalid passwod.
+</p>
+<button type="button" class="btn btn-primary" (click)="login()">
+  Login
+</button>
+<button type="button" class="btn btn-secondary">
+  Register
+</button>
